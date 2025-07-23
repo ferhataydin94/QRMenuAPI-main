@@ -1,0 +1,127 @@
+﻿Packages;
+Microsoft.ASPNetCore.Identity => Kullanıcı kontrolü ve hazır kullanıcı şeması
+Microsoft.ASPNetCore.Identity.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.EntityFrameworkCore.SqlServer => Sql bağlantısı için
+
+
+
+
+________Log________
+
+
+--------Day1-------
+QRMenuAPI/Models: folder created
+
+QRMenuAPI/Models/ApplicationUser: class created and inherited from IdentityUser
+QRMenuAPI/Models/Company: class added
+QRMenuAPI/Models/State: class added
+Properties of classes are added.
+
+QRMenuAPI/Data created
+QRMenuAPI/Data/ApplicationContext: class added and inherited from IdentityDbContext
+QRMenuAPI/Data/ApplicationContext: Ctor added
+All Db classes has to be added to ApplicationContext
+
+Connection String Added
+
+--If you are on windows sellect user etc. option when creating the project, this will edit program.cs and builders are added automatically--
+
+QRMenuAPI/program.cs: builder.Services.AddDbContext...,
+QRMenuAPI/program.cs: builder.Services.AddIdentityCore...,
+QRMenuAPI/program.cs: builder.Services.AddAuthentication();,
+QRMenuAPI/program.cs: builder.Services.AddAuthorization(); added
+
+QRMenuAPI/program.cs: app.UseAuthentication();
+QRMenuAPI/program.cs: app.UseAuthorization(); added
+
+
+---------Day2----------
+QRMenuAPI/Data/ApplicationContext: protected override void OnModelCreating method added
+
+Add Initial migration
+update database
+
+AzureDataStudio: Fill State table with state data
+
+New Controller Scaffold (API Controller with actions using Entity Framework)  for companies.
+
+NOTE: PUT: Update POST: Create
+
+Run the code and Create a company with swagger post request
+
+New Controller Scaffold (API Controller with actions using Entity Framework)  for ApplicationUser.
+QRMenuAPI/Data/ApplicationContext: Change ApplicationUser DeleteBehavior to NoAction
+
+QRMenuAPI/Controllers/UserController: Dependency Injection for UserManager.
+QRMenuAPI/Controllers/UserController:[HttpGet] return type changed with usermanager
+QRMenuAPI/Controllers/UserController:[HttpGet("{id}")] delete if block
+QRMenuAPI/Controllers/UserController:[HttpGet("{id}")] return type changed with usermanager
+QRMenuAPI/Controllers/UserController:[HttpPost] delete all until return block
+QRMenuAPI/Controllers/UserController:[HttpPost] await _userManager.CreateAsync(applicationUser, password);
+
+
+Run the code and Create a user with swagger post request
+userName: samet password: samet123.
+
+QRMenuAPI/Controllers/UserController: [HttpPut("{id}")] delete all until return
+QRMenuAPI/Controllers/UserController: [HttpPut("{id}")] find user by given id
+QRMenuAPI/Controllers/UserController: [HttpPut("{id}")] change properties witch you want to change
+QRMenuAPI/Controllers/UserController: [HttpPut("{id}")] update user 
+QRMenuAPI/Controllers/UserController: [HttpPut("{id}")] add changepassword
+
+QRMenuAPI/Controllers/UserController: [HttpDelete("{id}")] use usermanager to find user
+QRMenuAPI/Controllers/UserController: [HttpDelete("{id}")] check if it's null
+QRMenuAPI/Controllers/UserController: [HttpDelete("{id}")] soft delete  
+QRMenuAPI/Controllers/UserController: [HttpDelete("{id}")] return
+
+QRMenuAPI/Models/Restaurant: Restaurant class added
+QRMenuAPI/Data/ApplicationContext: Restaurant DbSet added
+QRMenuAPI/Data/ApplicationContext: Change Restaurant DeleteBehavior to NoAction
+
+New Controller Scaffold (API Controller with actions using Entity Framework)  for RestaurantsController.
+
+QRMenuAPI/Controllers/RestaurantsController 
+
+
+---------Day3----------
+
+Picture adding feature has to be added later
+
+
+QRMenuAPI/Controllers/UserController: [HttpPost(Login)] added
+QRMenuAPI/program.cs: addidentitycore service changed to addidentity
+QRMenuAPI/Controllers/UserController: [HttpPost("TokenlessResetPassword")] added
+QRMenuAPI/Controllers/UserController: [HttpPost("ResetPassword")] added
+QRMenuAPI/Controllers/UserController: [HttpPost("ValidateToken")] added
+
+QRMenuAPI/Controllers/CompaniesController: Application Roles and their permissions arranged
+
+
+---------Day4----------
+
+QRMenuAPI/Models/ApplicationRole: ApplicationRole class added and inherited from IdentityRole
+QRMenuAPI/Data/ApplicationContext: State seed data added
+
+QRMenuAPI/Controllers/RolesManager: RolesManager controller scafollded from ApplicationRole class
+Delete Microsoft.ASPNETCore.Identity version 2.2.0 if it gives error
+QRMenuAPI/Models/ApplicationRole: Delete ApplicationRole class
+
+QRMenuAPI/Controllers/RolesManager: [HttpPost] Role creation method added.
+
+QRMenuAPI/Controllers/UserController: DI for RoleManager
+QRMenuAPI/Controllers/UserController:  [HttpPost("AssignRole")] method added.
+
+QRMenuAPI/Program.cs: new instances of State, IdentityRole and ApplicationUser classes are created
+QRMenuAPI/Data/ApplicationContext: State seed data deleted
+
+QRMenuAPI/Program.cs: State seed data and first UserRole assigned
+QRMenuAPI/Program.cs: Initial Company seed data added
+
+
+---------Day5----------
+
+QRMenuAPI/Controllers/CompaniesController: [HttpPost] While creating a company, a company admin user created simultaniously.
+QRMenuAPI/Controllers/UserController:[HttpPost("Login")] User claim assigned
+QRMenuAPI/Controllers/CompaniesController: [HttpPut("{id}")] Check user claim to send put request
+QRMenuAPI/Controllers/CompaniesController: [HttpPost] While creating a company, claim declared to company admin user  
